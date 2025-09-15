@@ -1,0 +1,3 @@
+User-agent: *
+   Allow: /
+   Sitemap: https://emilofrancois.github.io/5F-Culinary---Restaurant-Moderne/sitemap.xml
