@@ -588,72 +588,143 @@
                 </div>
             </div>
         </div>
-    </section>
+      <!DOCTYPE html>
+<html>
+<head>
+    <title>Formulaire avec Webhook - 5F Culinary</title>
+</head>
+<body>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section">
-        <h2 class="section-title">Nous Contacter</h2>
-        <div class="contact-content">
-            <div class="contact-info">
-                <h3>Informations de Contact</h3>
-                
-                <div class="contact-item">
-                    <div class="contact-item-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="10" r="3" stroke="white" stroke-width="2" fill="#ff6b35"/>
-                            <path d="M12 22C12 22 20 14.36 20 9.5C20 5.36 16.42 2 12 2C7.58 2 4 5.36 4 9.5C4 14.36 12 22 12 22Z" stroke="white" stroke-width="2" fill="#ff6b35"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <strong>Adresse</strong><br>
-                        G3WW+3H Fianarantsoa<br>
-                        
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-item-icon">📞</div>
-                    <div>
-                        <strong>Téléphone</strong><br>
-                        +261 33 99 349 97
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-item-icon">✉️</div>
-                    <div>
-                        <strong>Email</strong><br>
-                        5fculinary.food@gmail.com 
-                    </div>
-                </div>
-                
-                <div class="contact-item">
-                    <div class="contact-item-icon">🕒</div>
-                    <div>
-                        <strong>Horaires</strong><br>
-                        lun-sam: 12h-14h / 19h-22h<br>
-                        Fermé le dimanche
-                    </div>
+<!-- Remplacez votre section contact actuelle par celle-ci -->
+<section id="contact" class="section">
+    <h2 class="section-title">Nous Contacter</h2>
+    <div class="contact-content">
+        <div class="contact-info">
+            <h3>Informations de Contact</h3>
+            
+            <div class="contact-item">
+                <div class="contact-item-icon">📍</div>
+                <div>
+                    <strong>Adresse</strong><br>
+                    G3WW+3H Fianarantsoa<br>
                 </div>
             </div>
             
-            <div class="contact-form">
-                <h3>Envoyez-nous un Message</h3>
-                <form action="" method="post">
-                    <div>
-                        <input type="text" name="name" placeholder="Votre Nom" required>
-                        <input type="text" name="subject" placeholder="Sujet">
-                    </div>
-                    <div style=" margin-top: 10px;gap: 10px;">
-                        <textarea name="message" placeholder="Votre Message"  required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Envoyer le Message</button>
-                    <input type="email" name="email" placeholder="Votre Email" required>
-                </form>
+            <div class="contact-item">
+                <div class="contact-item-icon">📞</div>
+                <div>
+                    <strong>Téléphone</strong><br>
+                    +261 33 99 349 97
+                </div>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-item-icon">✉️</div>
+                <div>
+                    <strong>Email</strong><br>
+                    5fculinary.food@gmail.com 
+                </div>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-item-icon">🕒</div>
+                <div>
+                    <strong>Horaires</strong><br>
+                    lun-sam: 12h-14h / 19h-22h<br>
+                    Fermé le dimanche
+                </div>
             </div>
         </div>
-    </section>
+        
+        <div class="contact-form">
+            <h3>Envoyez-nous un Message</h3>
+            <form id="contactForm">
+                <div>
+                    <input type="text" name="nom" id="nom" placeholder="Votre Nom" required>
+                    <input type="email" name="email" id="email" placeholder="Votre Email" required>
+                </div>
+                <div style="margin-top: 10px;">
+                    <input type="text" name="sujet" id="sujet" placeholder="Sujet">
+                </div>
+                <div style="margin-top: 10px;">
+                    <textarea name="message" id="message" placeholder="Votre Message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">Envoyer le Message</button>
+            </form>
+            
+            <!-- Zone de messages -->
+            <div id="messageResponse" style="margin-top: 15px; padding: 10px; border-radius: 5px; display: none;"></div>
+        </div>
+    </div>
+</section>
 
+<script>
+// Configuration - REMPLACEZ PAR VOTRE IP/DOMAINE LOCAL
+const LOCAL_SERVER_URL = 'http://VOTRE-IP-LOCALE:8080/webhook_receiver.php';
+// Exemple: 'http://192.168.1.100:8080/webhook_receiver.php'
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('submitBtn');
+    const messageDiv = document.getElementById('messageResponse');
+    
+    // Récupérer les données du formulaire
+    const formData = {
+        nom: document.getElementById('nom').value,
+        email: document.getElementById('email').value,
+        sujet: document.getElementById('sujet').value,
+        message: document.getElementById('message').value,
+        timestamp: new Date().toISOString(),
+        page_url: window.location.href
+    };
+    
+    // État de chargement
+    submitBtn.textContent = 'Envoi en cours...';
+    submitBtn.disabled = true;
+    messageDiv.style.display = 'none';
+    
+    // Envoyer vers le serveur local
+    fetch(LOCAL_SERVER_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur réseau');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            messageDiv.innerHTML = '<span style="color: green; background: #d4edda; padding: 10px; border-radius: 5px; display: block;">✅ Votre message a été envoyé avec succès ! Nous vous répondrons rapidement.</span>';
+            document.getElementById('contactForm').reset();
+        } else {
+            throw new Error(data.message || 'Erreur inconnue');
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        messageDiv.innerHTML = '<span style="color: #721c24; background: #f8d7da; padding: 10px; border-radius: 5px; display: block;">❌ Impossible d\'envoyer le message. Veuillez nous contacter directement par email : 5fculinary.food@gmail.com</span>';
+    })
+    .finally(() => {
+        submitBtn.textContent = 'Envoyer le Message';
+        submitBtn.disabled = false;
+        messageDiv.style.display = 'block';
+        
+        // Cacher le message après 5 secondes
+        setTimeout(() => {
+            messageDiv.style.display = 'none';
+        }, 5000);
+    });
+});
+</script>
+
+</body>
+</html>
     <!-- Footer -->
     <footer class="footer">
         <div class="section">
