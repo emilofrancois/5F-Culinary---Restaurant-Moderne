@@ -7,7 +7,7 @@ define('DB_CONFIG', [
     'host' => 'localhost',
     'dbname' => 'culinary_5f',
     'username' => 'culinary_user',
-    'password' => 'mot_de_passe_fort', // À changer !
+    'password' => '5fculinary25', // À changer !
     'charset' => 'utf8mb4'
 ]);
 
