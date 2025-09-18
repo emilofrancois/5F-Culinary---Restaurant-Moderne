@@ -635,90 +635,74 @@
                 </div>
             </div>
         </div>
-        
-        <div class="contact-form">
-            <h3>Envoyez-nous un Message</h3>
-            <form id="contactForm" action="backend/config.php" method="post">
-                <div>
-                    <input type="text" name="nom" id="nom" placeholder="Votre Nom" required>
-                    <input type="email" name="email" id="email" placeholder="Votre Email" required>
-                </div>
-                <div style="margin-top: 10px;">
-                    <input type="text" name="sujet" id="sujet" placeholder="Sujet">
-                </div>
-                <div style="margin-top: 10px;">
-                    <textarea name="message" id="message" placeholder="Votre Message" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn" id="submitBtn">Envoyer le Message</button>
-            </form>
-            
-            <!-- Zone de messages -->
-            <div id="messageResponse" style="margin-top: 15px; padding: 10px; border-radius: 5px; display: none;"></div>
+        <!-- Remplacez la section contact-form dans votre HTML existant -->
+<div class="contact-form">
+    <h3>Envoyez-nous un Message</h3>
+    <form id="contactForm" action="contact_handler.php" method="post">
+        <div>
+            <input type="text" name="name" id="name" placeholder="Votre Nom" required>
+            <input type="email" name="email" id="email" placeholder="Votre Email" required>
         </div>
-    </div>
-</section>
+        <div style="margin-top: 10px;">
+            <input type="text" name="subject" id="subject" placeholder="Sujet">
+        </div>
+        <div style="margin-top: 10px;">
+            <textarea name="message" id="message" placeholder="Votre Message" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">Envoyer le Message</button>
+    </form>
+    
+    <!-- Zone pour afficher les messages de retour -->
+    <div id="messageResponse" style="margin-top: 15px; padding: 10px; border-radius: 5px; display: none;"></div>
+</div>
 
 <script>
-// Configuration - REMPLACEZ PAR VOTRE IP/DOMAINE LOCAL
-const LOCAL_SERVER_URL = 'http://VOTRE-IP-LOCALE:8080/webhook_receiver.php';
-// Exemple: 'http://192.168.1.100:8080/webhook_receiver.php'
-
+// Gestionnaire de soumission du formulaire
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     const submitBtn = document.getElementById('submitBtn');
     const messageDiv = document.getElementById('messageResponse');
+    const formData = new FormData(this);
     
-    // Récupérer les données du formulaire
-    const formData = {
-        nom: document.getElementById('nom').value,
-        email: document.getElementById('email').value,
-        sujet: document.getElementById('sujet').value,
-        message: document.getElementById('message').value,
-        timestamp: new Date().toISOString(),
-        page_url: window.location.href
-    };
-    
-    // État de chargement
+    // Désactiver le bouton pendant l'envoi
     submitBtn.textContent = 'Envoi en cours...';
     submitBtn.disabled = true;
+    
+    // Cacher le message précédent
     messageDiv.style.display = 'none';
     
-    // Envoyer vers le serveur local
-    fetch(LOCAL_SERVER_URL, {
+    fetch('contact_handler.php', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
+        body: formData
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erreur réseau');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
         if (data.success) {
-            messageDiv.innerHTML = '<span style="color: green; background: #d4edda; padding: 10px; border-radius: 5px; display: block;">✅ Votre message a été envoyé avec succès ! Nous vous répondrons rapidement.</span>';
-            document.getElementById('contactForm').reset();
+            // Succès
+            messageDiv.innerHTML = '<span style="color: green;">✅ ' + data.message + '</span>';
+            this.reset(); // Vider le formulaire
         } else {
-            throw new Error(data.message || 'Erreur inconnue');
+            // Erreur
+            let errorMsg = '❌ ';
+            if (data.errors && Array.isArray(data.errors)) {
+                errorMsg += data.errors.join('<br>❌ ');
+            } else {
+                errorMsg += data.message || 'Une erreur est survenue';
+            }
+            messageDiv.innerHTML = '<span style="color: red;">' + errorMsg + '</span>';
         }
+        messageDiv.style.display = 'block';
     })
     .catch(error => {
         console.error('Erreur:', error);
-        messageDiv.innerHTML = '<span style="color: #721c24; background: #f8d7da; padding: 10px; border-radius: 5px; display: block;">❌ Impossible d\'envoyer le message. Veuillez nous contacter directement par email : 5fculinary.food@gmail.com</span>';
+        messageDiv.innerHTML = '<span style="color: red;">❌ Erreur de connexion. Veuillez réessayer.</span>';
+        messageDiv.style.display = 'block';
     })
     .finally(() => {
+        // Réactiver le bouton
         submitBtn.textContent = 'Envoyer le Message';
         submitBtn.disabled = false;
-        messageDiv.style.display = 'block';
-        
-        // Cacher le message après 5 secondes
-        setTimeout(() => {
-            messageDiv.style.display = 'none';
-        }, 5000);
     });
 });
 </script>
