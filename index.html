@@ -754,20 +754,23 @@
                 </div>
             </div>
             
-            <div class="contact-form">
-                <h3>Envoyez-nous un Message</h3>
-                <form id="contactForm">
-                    <input type="text" name="name" id="name" placeholder="Votre Nom" required>
-                    <input type="email" name="email" id="email" placeholder="Votre Email" required>
-                    <input type="text" name="subject" id="subject" placeholder="Sujet">
-                    <textarea name="message" id="message" placeholder="Votre Message" required></textarea>
-                    <button type="submit" class="submit-btn" id="submitBtn">Envoyer le Message</button>
-                </form>
-                
-                <div id="messageResponse" style="display: none;"></div>
-            </div>
-        </div>
-    </section>
+           <div class="contact-form">
+                 <h3>Envoyez-nous un Message</h3>
+    
+               <form action="https://formspree.io/f/mrbawvpr" method="POST">
+                 <input type="text" name="name" placeholder="Votre Nom" required>
+                 <input type="email" name="email" placeholder="Votre Email" required>
+                 <input type="text" name="subject" placeholder="Sujet">
+                 <textarea name="message" placeholder="Votre Message" required></textarea>
+        
+                 <!-- Champs cachés pour Formspree -->
+                 <input type="hidden" name="_subject" value="Nouveau message - 5F Culinary">
+        
+                 <button type="submit" class="submit-btn">Envoyer le Message</button>
+              </form>
+         </div>
+      </div>
+ </section>
 
     <!-- Footer -->
     <footer class="footer">
