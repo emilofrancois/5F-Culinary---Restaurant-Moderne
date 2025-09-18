@@ -758,10 +758,10 @@
                  <h3>Envoyez-nous un Message</h3>
     
                  <form id="contactForm" action="https://formspree.io/f/mrbawvpr" method="POST">
-                      <label> votre email: <input type="email" name="email"> </label>
-                      <label> votre message:<textarea name="message"></textarea> </label>
+                      <input type="email" name="email" id="email" placeholder="Votre Email" required>
+                      <textarea name="message" id="message" placeholder="Votre Message" required></textarea>
                       <!-- your other form fields go here -->
-                     <button type="submit">Envoyer</button>
+                      <button type="submit" class="submit-btn" id="submitBtn">Envoyer le Message</button>
                  </form>
          </div>
       </div>
