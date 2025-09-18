@@ -758,10 +758,10 @@
                  <h3>Envoyez-nous un Message</h3>
     
                  <form id="contactForm" action="https://formspree.io/f/mrbawvpr" method="POST">
-                      <input type="email" name="email" id="email" placeholder="Votre Email" required>
-                      <textarea name="message" id="message" placeholder="Votre Message" required></textarea>
+                      <input type="email" name="email" placeholder="Votre Email" required>
+                      <textarea name="message" placeholder="Votre Message" required></textarea>
                       <!-- your other form fields go here -->
-                      <button type="submit" class="submit-btn" id="submitBtn">Envoyer le Message</button>
+                      <button type="submit" class="submit-btn">Envoyer le Message</button>
                  </form>
          </div>
       </div>
@@ -854,41 +854,6 @@
             } else {
                 navbar.style.background = 'rgba(0, 0, 0, 0.95)';
             }
-        });
-
-        // Gestionnaire de formulaire de contact
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const messageDiv = document.getElementById('messageResponse');
-            const formData = new FormData(this);
-            
-            // Désactiver le bouton pendant l'envoi
-            submitBtn.textContent = 'Envoi en cours...';
-            submitBtn.disabled = true;
-            
-            // Cacher le message précédent
-            messageDiv.style.display = 'none';
-            
-            // Simulation d'envoi (remplacez par votre logique d'envoi réelle)
-            setTimeout(() => {
-                // Simuler une réponse réussie
-                const success = Math.random() > 0.2; // 80% de chance de succès
-                
-                if (success) {
-                    messageDiv.innerHTML = '<div class="success-message">✅ Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.</div>';
-                    this.reset(); // Vider le formulaire
-                } else {
-                    messageDiv.innerHTML = '<div class="error-message">❌ Une erreur est survenue lors de l\'envoi. Veuillez réessayer ou nous contacter directement.</div>';
-                }
-                
-                messageDiv.style.display = 'block';
-                
-                // Réactiver le bouton
-                submitBtn.textContent = 'Envoyer le Message';
-                submitBtn.disabled = false;
-            }, 1500);
         });
 
         // Gestion des erreurs d'images
