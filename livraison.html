@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livraison - 5F Culinary</title>
+    <meta name="description" content="Zones de livraison 5F Culinary à Fianarantsoa - Commandez vos plats préférés et faites-vous livrer">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #ff6b35;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b35;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 70px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="30" r="1.5" fill="white" opacity="0.1"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-10px, -10px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section commune */
+        .section {
+            padding: 80px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #ff6b35;
+            border-radius: 2px;
+        }
+
+        /* Stats Cards */
+        .stats-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 3px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            -webkit-mask-composite: xor;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff6b35;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Search Section */
+        .search-section {
+            padding: 40px 0;
+            background: white;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 60px 20px 25px;
+            border: 3px solid #eee;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff6b35;
+            font-size: 1.5rem;
+        }
+
+        /* Table Section */
+        .delivery-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+
+        .table-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            overflow-x: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 25px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th:first-child {
+            border-radius: 20px 0 0 0;
+        }
+
+        th:last-child {
+            border-radius: 0 20px 0 0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafbfc;
+        }
+
+        tr:hover {
+            background: linear-gradient(135deg, #fff5f2, #fff9f7);
+            transform: scale(1.01);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1);
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid #eef2f6;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .zone {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .address {
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .reference {
+            color: #888;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .status {
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            display: inline-block;
+            min-width: 100px;
+        }
+
+        .status.disponible {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);
+        }
+
+        .status.limite {
+            background: linear-gradient(135deg, #fdcb6e, #e17055);
+            color: white;
+            box-shadow: 0 5px 15px rgba(253, 203, 110, 0.3);
+        }
+
+        .delivery-time {
+            font-weight: 600;
+            color: #ff6b35;
+            font-size: 1rem;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .footer p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-icon {
+            color: #ff6b35;
+            font-size: 1.2rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            th, td {
+                padding: 12px 8px;
+                font-size: 0.8rem;
+            }
+
+            .status {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+                min-width: 80px;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .section {
+                padding: 40px 0;
+            }
+        }
+
+        /* Animation pour les éléments */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile menu toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 2rem;
+                text-align: center;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">5F Culinary</a>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Accueil</a></li>
+                <li><a href="index.html#about">À Propos</a></li>
+                <li><a href="index.html#menu">Menu</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="#delivery" class="active">Livraison</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🚚 Livraison à Domicile</h1>
+            <p>Savourez nos délicieux plats dans le confort de votre foyer à Fianarantsoa</p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card fade-in">
+                <div class="stat-number">25</div>
+                <div class="stat-label">Zones Couvertes</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Satisfaction Client</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-number">2-4h</div>
+                <div class="stat-label">Délai Moyen</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-number">7j/7</div>
+                <div class="stat-label">Service Continu</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Rechercher votre quartier ou zone..." id="searchInput">
+            <span class="search-icon">🔍</span>
+        </div>
+    </section>
+
+    <!-- Delivery Table Section -->
+    <section id="delivery" class="delivery-section">
+        <div class="section">
+            <h2 class="section-title">Zones de Livraison</h2>
+            <div class="table-container">
+                <table id="deliveryTable">
+                    <thead>
+                        <tr>
+                            <th>Zone/Quartier</th>
+                            <th>Adresse Principale</th>
+                            <th>Points de Référence</th>
+                            <th>Statut</th>
+                            <th>Délai</th>
+                            <th>Frais (Ar)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="zone">Centre-ville</td>
+                            <td class="address">Avenue de l'Indépendance</td>
+                            <td class="reference">Hôtel de Ville, Marché central</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">1-2h</td>
+                            <td class="price">2 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Tsianolondroa</td>
+                            <td class="address">Route de Manakara</td>
+                            <td class="reference">École primaire, Église catholique</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">2-3h</td>
+                            <td class="price">3 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Ankofafa</td>
+                            <td class="address">Rue Ankofafa</td>
+                            <td class="reference">Marché Ankofafa, Station service</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">2-3h</td>
+                            <td class="price">3 500</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Tanambao</td>
+                            <td class="address">Avenue Tanambao</td>
+                            <td class="reference">Université de Fianarantsoa</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">2-3h</td>
+                            <td class="price">gratuit</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Mahariana</td>
+                            <td class="address">Route de Mahariana</td>
+                            <td class="reference">Terrain de football, Épicerie centrale</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">3-4h</td>
+                            <td class="price">4 500</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Kianjasoa</td>
+                            <td class="address">Rue Kianjasoa</td>
+                            <td class="reference">Marché Kianjasoa, Bureau de poste</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">2-3h</td>
+                            <td class="price">2 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Androrangavola</td>
+                            <td class="address">Avenue Androrangavola</td>
+                            <td class="reference">Stade municipal, Pharmacie</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">2-4h</td>
+                            <td class="price">4 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Ampasambazaha</td>
+                            <td class="address">Route d'Ampasambazaha</td>
+                            <td class="reference">Banque, Supermarché</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">2-3h</td>
+                            <td class="price">2 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Ankazomanga</td>
+                            <td class="address">Rue Ankazomanga</td>
+                            <td class="reference">Église protestante, Cybercafé</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">3-4h</td>
+                            <td class="price">4 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Isotry</td>
+                            <td class="address">Avenue Isotry</td>
+                            <td class="reference">Marché Isotry, Garage automobile</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">2-4h</td>
+                            <td class="price">3 500</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Soaindrana</td>
+                            <td class="address">Route de Soaindrana</td>
+                            <td class="reference">Centre communautaire, Boutique</td>
+                            <td><span class="status limite">Limité</span></td>
+                            <td class="delivery-time">4-6h</td>
+                            <td class="price">6 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Ambalapaiso</td>
+                            <td class="address">Rue Ambalapaiso</td>
+                            <td class="reference">École secondaire, Dispensaire</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">3-4h</td>
+                            <td class="price">2 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Andrainjato</td>
+                            <td class="address">Route d'Andrainjato</td>
+                            <td class="reference">Coopérative agricole, Restaurant</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">3-5h</td>
+                            <td class="price"> 2000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Besoa</td>
+                            <td class="address">Avenue Besoa</td>
+                            <td class="reference">Parc municipal, Bibliothèque</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">2-3h</td>
+                            <td class="price">3 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Antohomadinika</td>
+                            <td class="address">Rue Antohomadinika</td>
+                            <td class="reference">Marché aux légumes, Atelier</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">3-4h</td>
+                            <td class="price">3 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Ankaramena</td>
+                            <td class="address">Avenue Ankaramena</td>
+                            <td class="reference">Centre culturel, Boulangerie</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">2-4h</td>
+                            <td class="price">3 500</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Andoharanofotsy</td>
+                            <td class="address">Rue Andoharanofotsy</td>
+                            <td class="reference">Terrain de basket, Magasin textile</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">3-4h</td>
+                            <td class="price">4 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Ambohimarina</td>
+                            <td class="address">Route d'Ambohimarina</td>
+                            <td class="reference">Rizière, Moulin à riz</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">3-5h</td>
+                            <td class="price">5 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Ankovo</td>
+                            <td class="address">Avenue Ankovo</td>
+                            <td class="reference">Coopérative, Centre de tri</td>
+                            <td><span class="status disponible">Disponible</span></td>
+                            <td class="delivery-time">3-4h</td>
+                            <td class="price">4 500</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Mahazengy</td>
+                            <td class="address">bus 21</td>
+                            <td class="reference">Termunus de bus 21</td>
+                            <td><span class="status limite">Disponible</span></td>
+                            <td class="delivery-time">4-6h</td>
+                            <td class="price">3 000</td>
+                        </tr>
+                        <tr>
+                            <td class="zone">Ranomafana (accès)</td>
+                            <td class="address">Route de Ranomafana</td>
+                            <td class="reference">Parc national, Sources chaudes</td>
+                            <td><span class="status limite">Limité</span></td>
+                            <td class="delivery-time">6-8h</td>
+                            <td class="price">20 000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="section">
+            <p>&copy; 2025 5F Culinary. Savourez l'excellence à domicile.</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="contact-icon">📍</span>
+                    <span>G3WW+3H Fianarantsoa</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📞</span>
+                    <span>+261 33 99 349 97</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">✉️</span>
+                    <span>5fculinary.food@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">🕒</span>
+                    <span>Lun-Sam: 12h-14h / 19h-22h</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Fonction de recherche
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#deliveryTable tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                    row.style.animation = 'fadeIn 0.5s ease';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Smooth scrolling pour la navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observer tous les éléments à animer
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Animation des lignes du tableau
+        document.querySelectorAll('tbody tr').forEach((row, index) => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateX(-20px)';
+            row.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            
+            setTimeout(() => {
+                row.style.opacity = '1';
+                row.style.transform = 'translateX(0)';
+            }, 500 + index * 50);
+        });
+
+        // Effet de survol amélioré pour les lignes
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02) translateZ(0)';
+                this.style.boxShadow = '0 10px 25px rgba(255, 107, 53, 0.2)';
+            });
+            
+            row.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) translateZ(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Navbar transparente au scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(0, 0, 0, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+            }
+        });
+
+        // Animation des stats au scroll
+        const statCards = document.querySelectorAll('.stat-card');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.style.opacity = '1';
+                        
+                        // Animation du nombre
+                        const numberElement = entry.target.querySelector('.stat-number');
+                        const finalNumber = numberElement.textContent;
+                        numberElement.textContent = '0';
+                        
+                        if (finalNumber.includes('%')) {
+                            animateNumber(numberElement, 0, parseInt(finalNumber), '%');
+                        } else if (finalNumber.includes('j')) {
+                            animateNumber(numberElement, 0, parseInt(finalNumber), 'j/7');
+                        } else if (finalNumber.includes('-')) {
+                            numberElement.textContent = finalNumber;
+                        } else {
+                            animateNumber(numberElement, 0, parseInt(finalNumber), '');
+                        }
+                    }, index * 200);
+                }
+            });
+        });
+
+        statCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            statsObserver.observe(card);
+        });
+
+        // Fonction d'animation des nombres
+        function animateNumber(element, start, end, suffix = '') {
+            const duration = 1500;
+            const increment = (end - start) / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= end) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current) + suffix;
+            }, 16);
+        }
+
+        // Effet de typing pour le titre hero
+        const heroTitle = document.querySelector('.hero h1');
+        const originalText = heroTitle.textContent;
+        heroTitle.textContent = '';
+        
+        setTimeout(() => {
+            let i = 0;
+            const typeInterval = setInterval(() => {
+                if (i < originalText.length) {
+                    heroTitle.textContent += originalText.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typeInterval);
+                }
+            }, 100);
+        }, 1000);
+
+        // Fonction de validation pour les adresses
+        function validateAddress(address) {
+            const validAddresses = [
+                'Centre-ville', 'Tsianolondroa', 'Ankofafa', 'Ambohipo', 'Tanambao',
+                'Mahariana', 'Kianjasoa', 'Antsirakambo', 'Androrangavola', 'Ampasambazaha',
+                'Ankazomanga', 'Isotry', 'Soaindrana', 'Ambalapaiso', 'Andrainjato',
+                'Besoa', 'Antohomadinika', 'Mahasoabe', 'Ankaramena', 'Andoharanofotsy',
+                'Ambalavao', 'Ambohimarina', 'Ankovo', 'Sahambavy', 'Ranomafana'
+            ];
+            
+            return validAddresses.some(validAddr => 
+                validAddr.toLowerCase().includes(address.toLowerCase()) ||
+                address.toLowerCase().includes(validAddr.toLowerCase())
+            );
+        }
+
+        // Gestion des erreurs de recherche
+        const searchInput = document.getElementById('searchInput');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            
+            searchTimeout = setTimeout(() => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                const rows = document.querySelectorAll('#deliveryTable tbody tr');
+                let visibleRows = 0;
+                
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    if (searchTerm === '' || text.includes(searchTerm)) {
+                        row.style.display = '';
+                        visibleRows++;
+                        row.style.animation = 'slideInLeft 0.3s ease forwards';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                // Afficher un message si aucun résultat
+                const noResultsMessage = document.getElementById('noResultsMessage');
+                if (visibleRows === 0 && searchTerm !== '') {
+                    if (!noResultsMessage) {
+                        const message = document.createElement('div');
+                        message.id = 'noResultsMessage';
+                        message.innerHTML = `
+                            <div style="text-align: center; padding: 3rem; color: #666;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                                <h3 style="color: #ff6b35; margin-bottom: 1rem;">Zone non trouvée</h3>
+                                <p>Désolé, nous ne livrons pas encore dans cette zone.</p>
+                                <p style="margin-top: 0.5rem;"><strong>Contactez-nous pour plus d'informations :</strong></p>
+                                <p style="color: #ff6b35; font-weight: bold;">+261 33 99 349 97</p>
+                            </div>
+                        `;
+                        document.querySelector('.table-container').appendChild(message);
+                    }
+                } else if (noResultsMessage) {
+                    noResultsMessage.remove();
+                }
+            }, 300);
+        });
+
+        // Animation CSS personnalisées
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            
+            .status:hover {
+                animation: pulse 0.6s ease-in-out;
+            }
+        `;
+        document.head.appendChild(style);
+
+    </script>
+</body>
+</html>
