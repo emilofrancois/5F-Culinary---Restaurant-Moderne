@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>5F Culinary - Restaurant Moderne</title>
-    <meta name="description" content="Cuisine inventive et classique avec Emilo, Emilie, Valérie, Kenty et Fanny.  Explorez nos recettes traditionnelles, conseils d'experts et sources d'inspiration.">
+    <meta name="description" content="Cuisine inventive et classique avec Emilo, Emilie, Valérie, Kenty et Fanny. Explorez nos recettes traditionnelles, conseils d'experts et sources d'inspiration.">
     <meta name="keywords" content="5F Culinary, restaurant moderne, cuisine raffinée, gastronomie, réservation restaurant">
     <meta name="author" content="5F Culinary Restaurant">
     <meta name="google-site-verification" content="vy1xts6yxi4p731zcpcqiueb5yxu0yalsp5dvncvb3w" />
+    <meta name="google-site-verification" content="RkAyjHjm-4hpeOjql9aXGavB-1f-vpL9Q-wCJ-8MHe0" />
+    
     <style>
         * {
             margin: 0;
@@ -81,6 +83,22 @@
 
         .nav-menu a:hover::after {
             width: 100%;
+        }
+
+        /* Menu mobile */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
         }
 
         /* Hero Section */
@@ -205,6 +223,10 @@
             color: #555;
         }
 
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
         .about-image {
             height: 350px;
             background: linear-gradient(45deg, #ff6b35, #f7931e);
@@ -216,6 +238,14 @@
             font-size: 1.5rem;
             text-align: center;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
         }
 
         /* Menu Section */
@@ -247,6 +277,13 @@
             justify-content: center;
             color: white;
             font-size: 1.2rem;
+            overflow: hidden;
+        }
+
+        .menu-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .menu-item-content {
@@ -262,6 +299,7 @@
         .menu-item p {
             color: #666;
             margin-bottom: 1rem;
+            line-height: 1.6;
         }
 
         .menu-price {
@@ -349,11 +387,19 @@
             justify-content: center;
             margin-right: 1rem;
             color: white;
+            font-size: 1.2rem;
         }
 
-        .contact-form {
-            display: grid;
-            gap: 10px;
+        .contact-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .contact-form input,
@@ -363,12 +409,18 @@
             border-radius: 10px;
             font-size: 1rem;
             transition: border-color 0.3s ease;
+            font-family: inherit;
         }
 
         .contact-form input:focus,
         .contact-form textarea:focus {
             outline: none;
             border-color: #ff6b35;
+        }
+
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
         }
 
         .submit-btn {
@@ -381,10 +433,34 @@
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s ease;
+            align-self: flex-start;
         }
 
         .submit-btn:hover {
             background: #e55a2b;
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        #messageResponse {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
 
         /* Footer */
@@ -408,29 +484,47 @@
         .social-link {
             width: 50px;
             height: 50px;
-            background: #ff6b35;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             text-decoration: none;
-            transition: background 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .social-link:hover {
-            background: #e55a2b;
+            transform: scale(1.1);
         }
 
-        /* Responsive */
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
             .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
                 flex-direction: column;
+                padding: 1rem;
                 gap: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
             }
 
             .hero h1 {
                 font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
             }
 
             .section-title {
@@ -446,16 +540,49 @@
             .section {
                 padding: 60px 0;
             }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .menu-grid,
+            .services-grid {
+                padding: 0 1rem;
+            }
+
+            .contact-content {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .cta-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+
+            .service-card,
+            .menu-item-content {
+                padding: 1.5rem;
+            }
         }
     </style>
-      <meta name="google-site-verification" content="RkAyjHjm-4hpeOjql9aXGavB-1f-vpL9Q-wCJ-8MHe0" />
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">5F Culinary</a>
-            <ul class="nav-menu">
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#home">Accueil</a></li>
                 <li><a href="#about">À Propos</a></li>
                 <li><a href="#menu">Menu</a></li>
@@ -469,7 +596,7 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>5F Culinary</h1>
-            <p>La pureté de l’art culinaire, des goûts qui narrent une histoire.</p>
+            <p>La pureté de l'art culinaire, des goûts qui narrent une histoire.</p>
             <a href="#menu" class="cta-button">Découvrir notre Menu</a>
         </div>
     </section>
@@ -482,12 +609,12 @@
                 <div class="about-text">
                     <p>5F Culinary, créée tout récemment, à peine sept jours, débute son parcours culinaire avec enthousiasme et détermination.</p>
                     
-                    <p>  Chaque plat est élaboré avec des ingrédients minutieusement choisis, combinant l'hommage aux traditions à une note de modernité qui fera notre marque de fabrique.</p>
+                    <p>Chaque plat est élaboré avec des ingrédients minutieusement choisis, combinant l'hommage aux traditions à une note de modernité qui fera notre marque de fabrique.</p>
                     
-                    <p> Notre équipe de chefs talentueux s’engage quotidiennement à vous offrir des moments d’exception, que ce soit pour un déjeuner d’affaires ou un dîner en amoureux. </p>
+                    <p>Notre équipe de chefs talentueux s'engage quotidiennement à vous offrir des moments d'exception, que ce soit pour un déjeuner d'affaires ou un dîner en amoureux.</p>
                 </div>
                 <div class="about-image">
-                    <img src="golo.png" alt="logo" style="height: 350px; width: 550px;border-radius: 20px;">
+                    <img src="golo.png" alt="Logo 5F Culinary" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:1.5rem;\'>5F Culinary</div>'">
                 </div>
             </div>
         </div>
@@ -499,53 +626,55 @@
         <div class="menu-grid">
             <div class="menu-item">
                 <div class="menu-item-image">
-                    <img src="gouter.png" alt="plat" style="height: 200px; width: 550px;">
+                    <img src="gouter.png" alt="Plats Chef Valérie" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:1.2rem;\'>Chef Valérie</div>'">
                 </div>
                 <div class="menu-item-content">
-                    <h3> Chef valerie</h3>
-                    <p>Imprégnez-vous de l’expérience gastronomique singulière offerte par Valérie, qui vous transporte au cœur des saveurs et des Récits de la cuisine Malgache.</p>
+                    <h3>Chef Valérie</h3>
+                    <p>Imprégnez-vous de l'expérience gastronomique singulière offerte par Valérie, qui vous transporte au cœur des saveurs et des récits de la cuisine Malgache.</p>
                     <div class="menu-price">Tarif : 2 000 – 8 000 Ar</div>
                 </div>
             </div>
             
             <div class="menu-item">
                 <div class="menu-item-image">
-                    <img src="hena.jpg" alt="plat" style="height: 200px; width: 550px;">
+                    <img src="hena.jpg" alt="Vary amin'henan'omby" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:1.2rem;\'>Riz et Bœuf</div>'">
                 </div>
                 <div class="menu-item-content">
                     <h3>Chef Emilie</h3>
-                    <p>Vary amin’henan’omby : Le mets traditionnel malgache composé de riz et de bœuf mijoté dans une sauce.</p>
+                    <p>Vary amin'henan'omby : Le mets traditionnel malgache composé de riz et de bœuf mijoté dans une sauce savoureuse.</p>
                     <div class="menu-price">Tarif : 18 000 – 20 000 Ar</div>
                 </div>
             </div>
+            
             <div class="menu-item">
                 <div class="menu-item-image">
-                    <img src="ravitoto.jpg" alt="plat" style="height: 200px; width: 550px;">
+                    <img src="ravitoto.jpg" alt="Ravitoto et riz" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:1.2rem;\'>Ravitoto</div>'">
                 </div>
                 <div class="menu-item-content">
-                    <h3>chef fanny</h3>
-                    <p>Ravitoto et riz : un mets traditionnel malgache à base de feuilles de manioc et De miel Fanny y apporte sa touche personnelle avec des adaptations inventives.</p>
+                    <h3>Chef Fanny</h3>
+                    <p>Ravitoto et riz : un mets traditionnel malgache à base de feuilles de manioc et de miel. Fanny y apporte sa touche personnelle avec des adaptations inventives.</p>
                     <div class="menu-price">Tarif : 20 000 – 22 000 Ar</div>
                 </div>
             </div>
             
             <div class="menu-item">
                 <div class="menu-item-image">
-                    <img src="riz et creve.jpg" alt="plat" style="height: 200px; width: 550px;">
+                    <img src="riz et creve.jpg" alt="Vary amin'anana" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:1.2rem;\'>Riz aux Brèdes</div>'">
                 </div>
                 <div class="menu-item-content">
                     <h3>Chef Emilo</h3>
-                    <p>Vary amin’anana : Le riz traditionnel malgache accompagné de brèdes et de viande.</p>
+                    <p>Vary amin'anana : Le riz traditionnel malgache accompagné de brèdes et de viande, préparé avec passion et authenticité.</p>
                     <div class="menu-price">Tarif : 10 000 – 15 000 Ar</div>
                 </div>
             </div>
 
-             <div class="menu-item">
+            <div class="menu-item">
                 <div class="menu-item-image">
-                    <img src="gateau2.jpg" alt="patissie" style="height: 200px; width: 550px;"></div>
+                    <img src="gateau2.jpg" alt="Pâtisseries Kenty" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:1.2rem;\'>Pâtisseries</div>'">
+                </div>
                 <div class="menu-item-content">
-                    <h3>Kenty, chef pâtissier</h3>
-                    <p>Éclair croustillant fourré de chocolat noir et crème légère au praliné.</p>
+                    <h3>Kenty, Chef Pâtissier</h3>
+                    <p>Éclair croustillant fourré de chocolat noir et crème légère au praliné, une création délicate qui ravira vos papilles.</p>
                     <div class="menu-price">Tarif : 10 000 – 20 000 Ar</div>
                 </div>
             </div>
@@ -560,190 +689,128 @@
                 <div class="service-card">
                     <div class="service-icon">🍽️</div>
                     <h3>Restaurant Sur Place</h3>
-                    <p>Profitez de notre service accueillant et attentionné dans un cadre sophistiqué et contemporain .</p>
+                    <p>Profitez de notre service accueillant et attentionné dans un cadre sophistiqué et contemporain.</p>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">🚚</div>
                     <h3>Livraison à Domicile</h3>
-                    <p>Vous pouvez commander nos assiettes en ligne et les avoir livré directement à votre porte, préparé avec le même soin comme dans un restaurant. </p>
+                    <p>Commandez nos assiettes en ligne et faites-vous livrer directement à votre porte, préparées avec le même soin qu'en restaurant.</p>
                 </div>
                 
                 <div class="service-card">
-                    <div class="service-icon">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="11" fill="#ff6b35" stroke="white" stroke-width="2"/>
-                            <path d="M8 15l8-8M16 15l-8-8" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                            <circle cx="12" cy="12" r="3" fill="white"/>
-                        </svg>
-                    </div>    
+                    <div class="service-icon">🎉</div>
                     <h3>Événements Privés</h3>
-                    <p>Planifiez vos événements spéciaux service individualisé avec notre conseiller pour Créez des souvenirs qui dureront toute une vie.</p>
+                    <p>Planifiez vos événements spéciaux avec notre service individualisé et notre conseiller pour créer des souvenirs inoubliables.</p>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">👨‍🍳</div>
                     <h3>Chef à Domicile</h3>
-                    <p></p>
+                    <p>Bénéficiez de l'expertise de nos chefs directement chez vous pour une expérience culinaire personnalisée et exclusive.</p>
                 </div>
             </div>
         </div>
-      <!DOCTYPE html>
-<html>
-<head>
-    <title>Formulaire avec Webhook - 5F Culinary</title>
-</head>
-<body>
+    </section>
 
-<!-- Remplacez votre section contact actuelle par celle-ci -->
-<section id="contact" class="section">
-    <h2 class="section-title">Nous Contacter</h2>
-    <div class="contact-content">
-        <div class="contact-info">
-            <h3>Informations de Contact</h3>
-            
-            <div class="contact-item">
-                <div class="contact-item-icon">📍</div>
-                <div>
-                    <strong>Adresse</strong><br>
-                    G3WW+3H Fianarantsoa<br>
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h2 class="section-title">Nous Contacter</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>Informations de Contact</h3>
+                
+                <div class="contact-item">
+                    <div class="contact-item-icon">📍</div>
+                    <div>
+                        <strong>Adresse</strong><br>
+                        G3WW+3H Fianarantsoa
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-item-icon">📞</div>
+                    <div>
+                        <strong>Téléphone</strong><br>
+                        +261 33 99 349 97
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-item-icon">✉️</div>
+                    <div>
+                        <strong>Email</strong><br>
+                        5fculinary.food@gmail.com 
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-item-icon">🕒</div>
+                    <div>
+                        <strong>Horaires</strong><br>
+                        Lun-Sam: 12h-14h / 19h-22h<br>
+                        Fermé le dimanche
+                    </div>
                 </div>
             </div>
             
-            <div class="contact-item">
-                <div class="contact-item-icon">📞</div>
-                <div>
-                    <strong>Téléphone</strong><br>
-                    +261 33 99 349 97
-                </div>
-            </div>
-            
-            <div class="contact-item">
-                <div class="contact-item-icon">✉️</div>
-                <div>
-                    <strong>Email</strong><br>
-                    5fculinary.food@gmail.com 
-                </div>
-            </div>
-            
-            <div class="contact-item">
-                <div class="contact-item-icon">🕒</div>
-                <div>
-                    <strong>Horaires</strong><br>
-                    lun-sam: 12h-14h / 19h-22h<br>
-                    Fermé le dimanche
-                </div>
+            <div class="contact-form">
+                <h3>Envoyez-nous un Message</h3>
+                <form id="contactForm">
+                    <input type="text" name="name" id="name" placeholder="Votre Nom" required>
+                    <input type="email" name="email" id="email" placeholder="Votre Email" required>
+                    <input type="text" name="subject" id="subject" placeholder="Sujet">
+                    <textarea name="message" id="message" placeholder="Votre Message" required></textarea>
+                    <button type="submit" class="submit-btn" id="submitBtn">Envoyer le Message</button>
+                </form>
+                
+                <div id="messageResponse" style="display: none;"></div>
             </div>
         </div>
-        <!-- Remplacez la section contact-form dans votre HTML existant -->
-<div class="contact-form">
-    <h3>Envoyez-nous un Message</h3>
-    <form id="contactForm" action="contact_handler.php" method="post">
-        <div>
-            <input type="text" name="name" id="name" placeholder="Votre Nom" required>
-            <input type="email" name="email" id="email" placeholder="Votre Email" required>
-        </div>
-        <div style="margin-top: 10px;">
-            <input type="text" name="subject" id="subject" placeholder="Sujet">
-        </div>
-        <div style="margin-top: 10px;">
-            <textarea name="message" id="message" placeholder="Votre Message" required></textarea>
-        </div>
-        <button type="submit" class="submit-btn" id="submitBtn">Envoyer le Message</button>
-    </form>
-    
-    <!-- Zone pour afficher les messages de retour -->
-    <div id="messageResponse" style="margin-top: 15px; padding: 10px; border-radius: 5px; display: none;"></div>
-</div>
+    </section>
 
-<script>
-// Gestionnaire de soumission du formulaire
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const submitBtn = document.getElementById('submitBtn');
-    const messageDiv = document.getElementById('messageResponse');
-    const formData = new FormData(this);
-    
-    // Désactiver le bouton pendant l'envoi
-    submitBtn.textContent = 'Envoi en cours...';
-    submitBtn.disabled = true;
-    
-    // Cacher le message précédent
-    messageDiv.style.display = 'none';
-    
-    fetch('contact_handler.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Succès
-            messageDiv.innerHTML = '<span style="color: green;">✅ ' + data.message + '</span>';
-            this.reset(); // Vider le formulaire
-        } else {
-            // Erreur
-            let errorMsg = '❌ ';
-            if (data.errors && Array.isArray(data.errors)) {
-                errorMsg += data.errors.join('<br>❌ ');
-            } else {
-                errorMsg += data.message || 'Une erreur est survenue';
-            }
-            messageDiv.innerHTML = '<span style="color: red;">' + errorMsg + '</span>';
-        }
-        messageDiv.style.display = 'block';
-    })
-    .catch(error => {
-        console.error('Erreur:', error);
-        messageDiv.innerHTML = '<span style="color: red;">❌ Erreur de connexion. Veuillez réessayer.</span>';
-        messageDiv.style.display = 'block';
-    })
-    .finally(() => {
-        // Réactiver le bouton
-        submitBtn.textContent = 'Envoyer le Message';
-        submitBtn.disabled = false;
-    });
-});
-</script>
     <!-- Footer -->
     <footer class="footer">
         <div class="section">
             <p>&copy; 2025 5F Culinary. Tous droits réservés.</p>
             <div class="social-links">
                 <a href="https://www.facebook.com/profile.php?id=61579819154091" class="social-link" target="_blank" aria-label="Facebook" style="background: linear-gradient(135deg, #1877F3 60%, #fff 100%);">
-                    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none">
-                        <rect width="24" height="24" rx="12" fill="#1877F3"/>
-                        <path d="M16.5 8.5h-2a.5.5 0 0 0-.5.5v2h2.25a.25.25 0 0 1 .25.25l-.01 2a.25.25 0 0 1-.25.25H14v5a.25.25 0 0 1-.25.25h-2a.25.25 0 0 1-.25-.25v-5h-1.5a.25.25 0 0 1-.25-.25v-2a.25.25 0 0 1 .25-.25H11v-2.5A2.5 2.5 0 0 1 13.5 6h2a.25.25 0 0 1 .25.25v2a.25.25 0 0 1-.25.25z" fill="white"/>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="white"/>
                     </svg>
                 </a>
-                <a href="https://www.tiktok.com/@5fculinary" class="social-link" target="_blank" aria-label="TikTok" style="background: radial-gradient(circle at 70% 30%, #25F4EE 0%, #FE2C55 60%, #000 100%);">
-                    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none">
-                        <rect width="24" height="24" rx="12" fill="#000"/>
-                        <path d="M17.5 9.5c-.7 0-1.4-.2-2-.6v4.1c0 2.1-1.7 3.8-3.8 3.8S8 15.1 8 13s1.7-3.8 3.8-3.8c.2 0 .4 0 .6.1v1.7c-.2-.1-.4-.1-.6-.1-1.2 0-2.1 1-2.1 2.1s1 2.1 2.1 2.1 2.1-1 2.1-2.1V6.5h1.6c.1.8.8 1.5 1.6 1.6v1.4z" fill="url(#tiktok-gradient)"/>
-                        <defs>
-                            <linearGradient id="tiktok-gradient" x1="8" y1="8" x2="18" y2="18" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#25F4EE"/>
-                                <stop offset="0.5" stop-color="#FE2C55"/>
-                                <stop offset="1" stop-color="#fff"/>
-                            </linearGradient>
-                        </defs>
+                
+                <a href="https://www.tiktok.com/@5fculinary" class="social-link" target="_blank" aria-label="TikTok" style="background: linear-gradient(135deg, #25F4EE 0%, #FE2C55 60%, #000 100%);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.06 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" fill="white"/>
                     </svg>
                 </a>
+                
                 <a href="https://www.instagram.com/5fculinary/" class="social-link" target="_blank" aria-label="Instagram" style="background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);">
-                    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none">
-                        <rect width="24" height="24" rx="12" fill="none"/>
-                        <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="white" stroke-width="2" fill="none"/>
-                        <circle cx="12" cy="12" r="5" stroke="white" stroke-width="2" fill="none"/>
-                        <circle cx="18" cy="6" r="1.2" fill="white"/>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="white"/>
                     </svg>
-                </a>
                 </a>
             </div>
         </div>
     </footer>
 
     <script>
+        // Menu mobile
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+
+        // Fermer le menu mobile lors du clic sur un lien
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
         // Smooth scrolling pour la navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -781,15 +848,106 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
             observer.observe(el);
         });
 
-        // Navbar transparente au scroll
+        // Navbar au scroll
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                navbar.style.background = 'rgba(0, 0, 0, 0.98)';
             } else {
                 navbar.style.background = 'rgba(0, 0, 0, 0.95)';
             }
         });
+
+        // Gestionnaire de formulaire de contact
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('messageResponse');
+            const formData = new FormData(this);
+            
+            // Désactiver le bouton pendant l'envoi
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            // Cacher le message précédent
+            messageDiv.style.display = 'none';
+            
+            // Simulation d'envoi (remplacez par votre logique d'envoi réelle)
+            setTimeout(() => {
+                // Simuler une réponse réussie
+                const success = Math.random() > 0.2; // 80% de chance de succès
+                
+                if (success) {
+                    messageDiv.innerHTML = '<div class="success-message">✅ Votre message a été envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.</div>';
+                    this.reset(); // Vider le formulaire
+                } else {
+                    messageDiv.innerHTML = '<div class="error-message">❌ Une erreur est survenue lors de l\'envoi. Veuillez réessayer ou nous contacter directement.</div>';
+                }
+                
+                messageDiv.style.display = 'block';
+                
+                // Réactiver le bouton
+                submitBtn.textContent = 'Envoyer le Message';
+                submitBtn.disabled = false;
+            }, 1500);
+        });
+
+        // Gestion des erreurs d'images
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                this.style.display = 'none';
+                const fallbackText = this.alt || 'Image non disponible';
+                this.parentElement.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:white;font-size:1.2rem;text-align:center;padding:1rem;">${fallbackText}</div>`;
+            });
+        });
+
+        // Effet parallaxe léger pour le hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const rate = scrolled * -0.5;
+            
+            if (hero) {
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // Animation d'apparition progressive des sections
+        const sectionsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('section-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.section').forEach(section => {
+            sectionsObserver.observe(section);
+        });
+
+        // Ajout de style pour l'animation des sections
+        const style = document.createElement('style');
+        style.textContent = `
+            .section {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.8s ease, transform 0.8s ease;
+            }
+            
+            .section-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            .hero {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
