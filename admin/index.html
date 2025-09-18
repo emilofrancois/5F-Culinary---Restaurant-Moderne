@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Messages - 5F Culinary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+        }
+
+        .header .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+            transition: background 0.3s ease;
+        }
+
+        .header a:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .message-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ff6b35;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .message-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .client-info {
+            flex: 1;
+        }
+
+        .client-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .client-email {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .message-meta {
+            text-align: right;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .status-nouveau {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .status-traite {
+            background: #28a745;
+            color: white;
+        }
+
+        .message-subject {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ff6b35;
+            margin: 10px 0;
+        }
+
+        .message-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.6;
+            color: #555;
+            margin: 15px 0;
+            white-space: pre-wrap;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #ff6b35;
+            border: 2px solid #ff6b35;
+        }
+
+        .btn-outline:hover {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .config-panel {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .config-panel h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .config-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .refresh-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            transform: scale(1.1);
+            background: #e55a2b;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spinning {
+            animation: spin 1s linear infinite;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .message-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .message-meta {
+                text-align: left;
+            }
+
+            .message-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 Messages Clients - 5F Culinary</h1>
+            <div class="nav-links">
+                <a href="../index.html">🏠 Site Principal</a>
+                <a href="https://github.com/VOTRE-USERNAME/5f-culinary-site/issues" target="_blank">📋 GitHub Issues</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Configuration -->
+            <div class="config-panel" id="configPanel" style="display: none;">
+                <h3>⚙️ Configuration GitHub</h3>
+                <input type="text" id="githubUsername" placeholder="Nom d'utilisateur GitHub" class="config-input">
+                <input type="text" id="githubRepo" placeholder="Nom du repository" value="5f-culinary-site" class="config-input">
+                <input type="password" id="githubToken" placeholder="Token d'accès GitHub" class="config-input">
+                <button class="btn btn-primary" onclick="saveConfig()">💾 Sauvegarder</button>
+                <button class="btn btn-outline" onclick="toggleConfig()">❌ Fermer</button>
+            </div>
+
+            <!-- Statistiques -->
+            <div class="stats" id="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalMessages">-</div>
+                    <div>Messages Total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="todayMessages">-</div>
+                    <div>Aujourd'hui</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="openMessages">-</div>
+                    <div>Non traités</div>
+                </div>
+                <div class="stat-card">
+                    <button class="btn btn-outline" onclick="toggleConfig()" style="width: 100%; justify-content: center;">
+                        ⚙️ Configuration
+                    </button>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div id="messagesContainer">
+                <div class="loading">
+                    <h3>🔄 Chargement des messages...</h3>
+                    <p>Si c'est la première fois, configurez d'abord vos paramètres GitHub.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="refresh-btn" id="refreshBtn" onclick="loadMessages()" title="Actualiser">🔄</button>
+
+    <script>
+        let config = {
+            username: localStorage.getItem('github_username') || '',
+            repo: localStorage.getItem('github_repo') || '5f-culinary-site',
+            token: localStorage.getItem('github_token') || ''
+        };
+
+        // Fonction pour basculer l'affichage de la configuration
+        function toggleConfig() {
+            const panel = document.getElementById('configPanel');
+            const isVisible = panel.style.display !== 'none';
+            
+            panel.style.display = isVisible ? 'none' : 'block';
+            
+            if (!isVisible) {
+                document.getElementById('githubUsername').value = config.username;
+                document.getElementById('githubRepo').value = config.repo;
+                document.getElementById('githubToken').value = config.token;
+            }
+        }
+
+        // Fonction pour sauvegarder la configuration
+        function saveConfig() {
+            config.username = document.getElementById('githubUsername').value;
+            config.repo = document.getElementById('githubRepo').value;
+            config.token = document.getElementById('githubToken').value;
+
+            localStorage.setItem('github_username', config.username);
+            localStorage.setItem('github_repo', config.repo);
+            localStorage.setItem('github_token', config.token);
+
+            toggleConfig();
+            loadMessages();
+        }
+
+        // Fonction pour charger les messages depuis GitHub Issues
+        async function loadMessages() {
+            const container = document.getElementById('messagesContainer');
+            const refreshBtn = document.getElementById('refreshBtn');
+            
+            // Vérifier la configuration
+            if (!config.username || !config.repo || !config.token) {
+                container.innerHTML = `
+                    <div class="error">
+                        <h3>⚙️ Configuration requise</h3>
+                        <p>Veuillez configurer vos paramètres GitHub pour voir les messages.</p>
+                        <button class="btn btn-primary" onclick="toggleConfig()">⚙️ Configurer maintenant</button>
+                    </div>
+                `;
+                return;
+            }
+
+            refreshBtn.classList.add('spinning');
+            
+            try {
+                const response = await fetch(`https://api.github.com/repos/${config.username}/${config.repo}/issues?labels=contact&sort=created&direction=desc`, {
+                    headers: {
+                        'Authorization': `token ${config.token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(`Erreur ${response.status}: ${errorData.message || response.statusText}`);
+                }
+
+                const issues = await response.json();
+                displayMessages(issues);
+                updateStats(issues);
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                container.innerHTML = `
+                    <div class="error">
+                        <h3>❌ Erreur de chargement</h3>
+                        <p><strong>Erreur:</strong> ${error.message}</p>
+                        <p><strong>Vérifiez :</strong></p>
+                        <ul>
+                            <li>Nom d'utilisateur GitHub: <code>${config.username}</code></li>
+                            <li>Repository: <code>${config.repo}</code></li>
+                            <li>Token d'accès (permissions: repo, issues)</li>
+                            <li>Que le repository existe et est accessible</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="toggleConfig()">⚙️ Modifier la configuration</button>
+                    </div>
+                `;
+            } finally {
+                refreshBtn.classList.remove('spinning');
+            }
+        }
+
+        // Fonction pour afficher les messages
+        function displayMessages(messages) {
+            const container = document.getElementById('messagesContainer');
+            
+            if (messages.length === 0) {
+                container.innerHTML = `
+                    <div class="message-card">
+                        <h3>📭 Aucun message pour le moment</h3>
+                        <p>Les messages de votre site apparaîtront ici automatiquement.</p>
+                        <p><a href="../index.html#contact" class="btn btn-primary">🏠 Aller au formulaire de contact</a></p>
+                    </div>
+                `;
+                return;
+            }
+
+            const messagesHTML = messages.map(issue => {
+                const createdDate = new Date(issue.created_at);
+                const formattedDate = createdDate.toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                // Parser le contenu du message
+                const body = issue.body || '';
+                const emailMatch = body.match(/\*\*Email:\*\*\s*(.+)/);
+                const nameMatch = body.match(/\*\*Nom:\*\*\s*(.+)/);
+                const messageMatch = body.match(/\*\*Message:\*\*\s*([\s\S]*?)(?:\n---|\n\*Message envoyé|$)/);
+                
+                const clientName = nameMatch ? nameMatch[1].trim() : 'Client';
+                const clientEmail = emailMatch ? emailMatch[1].trim() : '';
+                const messageContent = messageMatch ? messageMatch[1].trim() : body;
+
+                const isOpen = issue.state === 'open';
+                
+                return `
+                    <div class="message-card">
+                        <div class="message-header">
+                            <div class="client-info">
+                                <div class="client-name">${clientName}</div>
+                                ${clientEmail ? `<div class="client-email">📧 ${clientEmail}</div>` : ''}
+                            </div>
+                            <div class="message-meta">
+                                <div class="status-badge ${isOpen ? 'status-nouveau' : 'status-traite'}">
+                                    ${isOpen ? '🆕 Nouveau' : '✅ Traité'}
+                                </div>
+                                <div>📅 ${formattedDate}</div>
+                                <div>🏷️ #${issue.number}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="message-subject">📝 ${issue.title}</div>
+                        
+                        <div class="message-content">${messageContent}</div>
+                        
+                        <div class="message-actions">
+                            <a href="${issue.html_url}" target="_blank" class="btn btn-outline">
+                                📋 Voir sur GitHub
+                            </a>
+                            ${clientEmail ? `
+                                <a href="mailto:${clientEmail}?subject=Re: ${encodeURIComponent(issue.title)}" class="btn btn-primary">
+                                    📧 Répondre par email
+                                </a>
+                            ` : ''}
+                            ${isOpen ? `
+                                <button class="btn btn-success" onclick="closeIssue(${issue.number})">
+                                    ✅ Marquer comme traité
+                                </button>
+                            ` : `
+                                <button class="btn btn-outline" onclick="reopenIssue(${issue.number})">
+                                    🔄 Rouvrir
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = messagesHTML;
+        }
+
+        // Fonction pour mettre à jour les statistiques
+        function updateStats(messages) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const todayMessages = messages.filter(msg => {
+                const msgDate = new Date(msg.created_at);
+                msgDate.setHours(0, 0, 0, 0);
+                return msgDate.getTime() === today.getTime();
+            }).length;
+            
+            const openMessages = messages.filter(msg => msg.state === 'open').length;
+            
+            document.getElementById('totalMessages').textContent = messages.length;
+            document.getElementById('todayMessages').textContent = todayMessages;
+            document.getElementById('openMessages').textContent = openMessages;
+        }
+
+        // Fonction pour fermer un issue
+        async function closeIssue(issueNumber) {
+            try {
+                const response = await fetch(`https://api.github.com/repos/${config.username}/${config.repo}/issues/${issueNumber}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `token ${config.token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        state: 'closed',
+                        labels: ['contact', 'traité']
+                    })
+                });
+
+                if (response.ok) {
+                    await loadMessages();
+                } else {
+                    alert('Erreur lors de la mise à jour');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la mise à jour');
+            }
+        }
+
+        // Fonction pour rouvrir un issue
+        async function reopenIssue(issueNumber) {
+            try {
+                const response = await fetch(`https://api.github.com/repos/${config.username}/${config.repo}/issues/${issueNumber}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `token ${config.token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        state: 'open',
+                        labels: ['contact', 'nouveau']
+                    })
+                });
+
+                if (response.ok) {
+                    await loadMessages();
+                } else {
+                    alert('Erreur lors de la mise à jour');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la mise à jour');
+            }
+        }
+
+        // Chargement initial
+        loadMessages();
+        
+        // Auto-refresh toutes les 2 minutes
+        setInterval(loadMessages, 120000);
+    </script>
+</body>
+</html>
