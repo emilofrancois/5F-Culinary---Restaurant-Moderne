@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Restaurant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-section {
+            padding: 30px;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b, #ee5a24);
+            border-radius: 2px;
+        }
+
+        .menu-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .menu-table th {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-table td {
+            padding: 20px;
+            border-bottom: 1px solid #ecf0f1;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .menu-table tr:hover td {
+            background: linear-gradient(90deg, #f8f9fa, #e9ecef);
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .item-description {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            text-align: center;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .quantity-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .add-to-cart {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .cart-summary {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .cart-summary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .cart-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .cart-total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: #00b894;
+        }
+
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .menu-table {
+                font-size: 0.9rem;
+            }
+            
+            .menu-table th,
+            .menu-table td {
+                padding: 15px 10px;
+            }
+        }
+
+        /* Section de commande améliorée */
+        .contact-form {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .contact-form h3 {
+            font-size: 2rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .contact-form h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b, #ee5a24);
+            border-radius: 2px;
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-form label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            padding: 18px 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: center;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .contact-form {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            
+            .contact-form h3 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍽️ Restaurant Délices</h1>
+            <p>Découvrez nos spécialités culinaires</p>
+        </div>
+
+        <div class="menu-section">
+            <h2 class="category-title">Kenty, chef pâtissier</h2>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Plat</th>
+                        <th style="text-align: center;">Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="item-name">Éclair au chocolat</div>
+                            <div class="item-description">Avec sa crème pâtissière vanille et glaçage fondant</div>
+                        </td>
+                        <td class="price">12.50€</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="item-name">Chouquettes</div>
+                            <div class="item-description">Avec les fameux grains de sucre perlé</div>
+                        </td>
+                        <td class="price">15.00€</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="category-title">Chef Emilo</h2>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Plat</th>
+                        <th style="text-align: center;">Prix</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="item-name">Vary amin'anana</div>
+                            <div class="item-description">Plat traditionnel malgache : riz blanc accompagné de brèdes </div>
+                        </td>
+                        <td class="price">24.50€</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="item-name">Vary amin'anana special porc</div>
+                            <div class="item-description">Riz parfumé, brèdes anamalaho avec morceaux de porc fumé, oignons rouges, ail et gingembre </div>
+                        </td>
+                        <td class="price">28.00€</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="item-name">Vary amin'anana traditionnel</div>
+                            <div class="item-description">Riz blanc vapeur, brèdes mafana mijotées avec viande de bœuf, ail, gingembre et tomates fraîches</div>
+                        </td>
+                        <td class="price">19.50€</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="category-title">Chef Valérie</h2>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Plat</th>
+                        <th style="text-align: center;">Prix</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="item-name">Koba Ravina </div>
+                            <div class="item-description">Gâteau de riz aux cacahuètes, enveloppé dans une feuille de bananier</div>
+                        </td>
+                        <td class="price">8.50€</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="item-name">Godrogodro</div>
+                            <div class="item-description"> Gâteau de riz ,avec des gout special</div>
+                        </td>
+                        <td class="price">9.00€</td>
+                    </tr>
+                </tbody>
+            </table>
+
+             <h2 class="category-title">Chef Emilie</h2>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Plat</th>
+                        <th style="text-align: center;">Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="item-name">Vary amin'henan'omby</div>
+                            <div class="item-description">Le mets traditionnel malgache composé de riz blanc et de bœuf mijoté dans une sauce savoureuse à l'ail, gingembre et tomates fraîche</div>
+                        </td>
+                        <td class="price">12.50€</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="item-name">Menu familial</div>
+                            <div class="item-description">Riz rouge et blanc mélangé, 800g de bœuf mijoté dans une sauce généreuse aux épices traditionnelles</div>
+                        </td>
+                        <td class="price">15.00€</td>
+                    </tr>
+                </tbody>
+            </table>
+
+             <h2 class="category-title">Chef Fanny</h2>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Plat</th>
+                        <th style="text-align: center;">Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="item-name">Ravitoto et riz </div>
+                            <div class="item-description">Revisité du mets traditionnel malgache : feuilles de manioc pilées</div>
+                        </td>
+                        <td class="price">12.50€</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="item-name">Ravitoto melanger</div>
+                            <div class="item-description">Ravitoto traditionnel avec viande,coco ,voandro,hena kisoa </div>
+                        </td>
+                        <td class="price">15.00€</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Section de commande améliorée -->
+    <div class="contact-form">
+        <h3> Envoyez votre commande</h3>
+        
+        <form action="https://formspree.io/f/mvgbekqz" method="POST">
+            <label>
+                Votre Email:
+                <input type="email" name="email" required placeholder="votre.email@exemple.com">
+            </label>
+            
+            <label>
+                Votre commande:
+                <textarea name="message" required placeholder="Décrivez votre commande en détail (plats, quantités, etc.)"></textarea>
+            </label>
+            
+            <!-- Champs supplémentaires -->
+            <label>
+                Nom complet:
+                <input type="text" name="name" required placeholder="Votre nom et prénom">
+            </label>
+            
+            <label>
+                Téléphone:
+                <input type="tel" name="phone" required placeholder="Votre numéro de téléphone">
+            </label>
+            
+            <label>
+                Adresse de livraison:
+                <textarea name="address" required placeholder="Votre adresse complète de livraison"></textarea>
+            </label>
+            
+            <button type="submit" class="submit-btn"> Envoyer la commande</button>
+            <a href="index.html" style="text-decoration: none;margin-left: 180px; color: #7f8c8d;"> revenir a la page Accueil</a>
+        </form>
+        
+    </div>
+</body>
+</html>
