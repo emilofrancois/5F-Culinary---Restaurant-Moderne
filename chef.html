@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef à Domicile - 5F Culinary</title>
+    <meta name="description" content="Service Chef à Domicile 5F Culinary - Une expérience culinaire exclusive dans votre propre maison avec nos chefs professionnels.">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #ff6b35;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b35;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Menu mobile */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 70vh;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.9), rgba(247, 147, 30, 0.9)), url('chef-domicile.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section commune */
+        .section {
+            padding: 100px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #ff6b35;
+            border-radius: 2px;
+        }
+
+        /* Service Details */
+        .service-details {
+            background: #f8f9fa;
+            padding: 0 2rem;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .details-content h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .details-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .details-image {
+            height: 400px;
+            background: url('chef-domicile-service.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: #ff6b35;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .feature-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: #f8f9fa;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid #ff6b35;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'POPULAIRE';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: #ff6b35;
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .pricing-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff6b35;
+            margin-bottom: 1rem;
+        }
+
+        .price-period {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 35px;
+            background: #ff6b35;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+            background: #e55a2b;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #e55a2b;
+        }
+
+        /* Footer */
+        .footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .footer p {
+            margin-bottom: 1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #e55a2b;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .features-grid,
+            .pricing-cards {
+                padding: 0 1rem;
+            }
+
+            .contact-form {
+                margin: 0 1rem;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">5F Culinary</a>
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#about">À Propos</a></li>
+                <li><a href="index.html#menu">Menu</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Chef à Domicile</h1>
+            <p>Vivez une expérience culinaire exclusive dans le confort de votre foyer avec nos chefs professionnels</p>
+        </div>
+    </section>
+
+    <!-- Service Details -->
+    <section class="service-details">
+        <div class="section">
+            <div class="details-grid">
+                <div class="details-content">
+                    <h3>Une expérience culinaire personnalisée</h3>
+                    <p>Nos chefs qualifiés se déplacent chez vous pour créer une expérience gastronomique sur mesure. Que ce soit pour une occasion spéciale, un dîner romantique ou simplement pour vous faire plaisir, nous apportons l'excellence de 5F Culinary directement dans votre cuisine.</p>
+                    <p>Chaque menu est conçu selon vos préférences, vos restrictions alimentaires et vos envies du moment. Nos chefs utilisent des ingrédients frais et de qualité premium pour vous garantir une expérience inoubliable.</p>
+                </div>
+                <div class="details-image">
+                    <img src="images/momo.png" alt="image chef à domicile" style="width:100%; height: 400px; object-fit: cover; border-radius: 20px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <h2 class="section-title">Nos Services Inclus</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">👨‍🍳</div>
+                <h4>Chef Professionnel</h4>
+                <p>Un chef expérimenté de notre équipe se déplace chez vous avec tout l'équipement nécessaire.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🍽️</div>
+                <h4>Menu Personnalisé</h4>
+                <p>Création d'un menu unique adapté à vos goûts et restrictions alimentaires.</p>
+            </div>
+            
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎭</div>
+                <h4>Service de Table</h4>
+                <p>Service professionnel avec présentation soignée et service à table optionnel.</p>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing">
+        <div class="section">
+            <h2 class="section-title">Nos Formules</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h4>Formule Découverte</h4>
+                    <div class="price">45 000 Ar</div>
+                    <div class="price-period">par personne (min. 2 pers.)</div>
+                    <ul class="features-list">
+                        <li>Menu 3 services</li>
+                        <li>Chef pendant 3h</li>
+                        <li>Courses incluses</li>
+                        <li>Nettoyage</li>
+                        <li>Jusqu'à 4 personnes</li>
+                    </ul>
+                    <a href="#contact" class="cta-button">Réserver</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h4>Formule Prestige</h4>
+                    <div class="price">65 000 Ar</div>
+                    <div class="price-period">par personne (min. 2 pers.)</div>
+                    <ul class="features-list">
+                        <li>Menu 5 services</li>
+                        <li>Chef pendant 4h</li>
+                        <li>Courses premium incluses</li>
+                        <li>Service de table</li>
+                        <li>Jusqu'à 6 personnes</li>
+                        <li>Accords vins</li>
+                    </ul>
+                    <a href="#contact" class="cta-button">Réserver</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h4>Cours de Cuisine</h4>
+                    <div class="price">30 000 Ar</div>
+                    <div class="price-period">par personne (min. 3 pers.)</div>
+                    <ul class="features-list">
+                        <li>Cours interactif 2h</li>
+                        <li>Recettes à emporter</li>
+                        <li>Ingrédients inclus</li>
+                        <li>Dégustation</li>
+                        <li>Jusqu'à 8 personnes</li>
+                    </ul>
+                    <a href="#contact" class="cta-button">Réserver</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="section" id="contact">
+        <h2 class="section-title">Réserver Votre Chef</h2>
+        <div class="contact-form">
+            <form id="chefForm" action= https://formspree.io/f/xdklqwar  method="POST">
+                <div class="form-group">
+                    <label for="name">Nom complet *</label>
+                    <input type="text" name="name" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Téléphone *</label>
+                    <input type="tel" name="phone" id="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">Date souhaitée *</label>
+                    <input type="date" name="date" id="date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="guests">Nombre d'invités *</label>
+                    <select name="guests" id="guests" required>
+                        <option value="">Sélectionner...</option>
+                        <option value="2">2 personnes</option>
+                        <option value="3">3 personnes</option>
+                        <option value="4">4 personnes</option>
+                        <option value="5">5 personnes</option>
+                        <option value="6">6 personnes</option>
+                        <option value="7">7 personnes</option>
+                        <option value="8">8 personnes</option>
+                        <option value="plus">Plus de 8 personnes</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="formule">Formule souhaitée *</label>
+                    <select name="formule" id="formule" required>
+                        <option value="">Sélectionner...</option>
+                        <option value="decouverte">Formule Découverte</option>
+                        <option value="prestige">Formule Prestige</option>
+                        <option value="cours">Cours de Cuisine</option>
+                        <option value="personnalisee">Formule Personnalisée</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Demandes spéciales, allergies, préférences</label>
+                    <textarea name="message" id="message" placeholder="Décrivez vos préférences culinaires, allergies, ou demandes particulières..."></textarea>
+                </div>
+                
+                <input type="hidden" name="service" value="Chef à Domicile">
+                <button type="submit" class="submit-btn">Envoyer la Demande</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="section">
+            <a href="index.html" class="back-link">← Retour à l'accueil</a>
+            <p>&copy; 2025 5F Culinary. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileMenuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+
+        // Fermer le menu mobile lors du clic sur un lien
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observer tous les éléments à animer
+        document.querySelectorAll('.feature-card, .pricing-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Validation de date (pas de date passée)
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+    </script>
+</body>
+</html>
